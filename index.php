@@ -10,8 +10,8 @@
 <body>
     <form action="upload.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-        <input type="file" name="files">
-        <input type="submit" name="download" value="Télécharger">
+        <input type="file" name="files[]" multiple>
+        <input type="submit" name="submit" value="Télécharger">
     </form>
 </body>
 </html>
