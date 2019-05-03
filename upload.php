@@ -1,7 +1,5 @@
 <?php
 
-var_dump($_FILES);
-
 $errors = [];
 $authorizedTypes = ["image/jpeg", "image/png", "image/gif"];
 $maxFileSize = 1000000;
@@ -35,74 +33,20 @@ if (isset($_POST['submit'])) {
                 echo "</ul>";
             } else {
 
-                //rename file
-                $oldNameComplete = $files['name'][$i];
-                //TODO
+                //recup extension
+                $extension = explode('.', $files['name'][$i]);
 
+                //génère id unique
+                $id = uniqid("image");
 
                 //save file in directory
-                $directory = 'img/';
-                $fileName = basename($files['name']);
-                if (move_uploaded_file($files['tmp_name'], $directory . $fileName)) {
-                    $success = true;
-                }
+                $directory = __DIR__ .'/img/';
+                $fileName = basename($files['name'][$i]);
+                move_uploaded_file($files['tmp_name'][$i], $directory . $id . "." . $extension[1]);
 
-                //if success = true --> Redirection
-                //header('Location: redirect.php');
+                //redirection
+                header('Location: redirect.php');
             }
-
-
-
-
-            $tmpFilePath = $files['tmp_name'][$i];
-            if ($tmpFilePath != "") {
-                $shortName = $files['name'];
-            }
-
-            $filePath = "/img/" . $files[$i];
         }
-
-
-        //challenge :
-        //upload multiple
-        //utiliser rename() pour renommer un fichier /nom : imageIDUNIQUE.extension
-        //bouton delete (fonction unlink) présent
-        //fichier uploadés affichés en thumbnails bootstrap avec bouton delete pour chaque
     }
 }
-
-if (!empty($errors)) {
-    foreach ($errors as $error) {
-        echo "Errors : " . $error;
-    }
-} else {
-    echo "Tout s'est bien passé, cool non ?";
-}
-
-
-die();
-
-
-
-
-if (!empty($_FILES['files']['name'][0])) {
-
-    $files = $_FILES['files'];
-}
-
-
-foreach ($_FILES["files"]["type"] as $types => $type) {
-    if (!in_array($type, $authorizedTypes)) {
-        $errors["type"] = "Type de fichier invalide";
-    }
-}
-
-foreach ($_FILES["files"]["size"] as $sizes => $size) {
-    if ($size > $maxSize) {
-        $errors["size"] = "Taille trop importante";
-    }
-}
-
-
-
-
