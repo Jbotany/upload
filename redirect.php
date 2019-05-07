@@ -20,8 +20,9 @@ $scanImages = array_diff(scandir($directory), array('..', '.'));
 <div class="container">
     <div class="row">
         <?php foreach ($scanImages as $key => $value) : ?>
-            <div class="col-1">
+            <div class="col-3">
                 <img alt="" src="img/<?= $value; ?>" class="img-thumbnail">
+                <p><?= $value ?></p>
                 <form method="POST">
                     <button type="submit" class="btn btn-primary" name="delete<?= $key ?>" id="delete<?= $key ?>">
                         Delete
